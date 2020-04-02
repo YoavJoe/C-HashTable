@@ -64,4 +64,34 @@ int contains(char* key)
 	return FALSE;
 }
 
+/*python printing style*/
+void print()
+{
+	int i, j, size;
+	node* vec = NULL;
+
+	if(curr_size == 0)
+	{
+		printf("{}\n");
+		return;
+	}
+
+	printf("{");
+
+	for(i = 0; i < HASH_SIZE; i++)
+	{
+		vec = hash_table[i];
+		size = getCount(vec);	
+		for(j = 0; j < size; j++)
+		{
+			printf("%s",vec->p->key);
+			printf(":");
+			printf("%d"vec->p->value);
+			if(i < HASH_SIZE)
+				printf(", ");
+		}
+	}
+
+	printf("}\n");
+}
 
