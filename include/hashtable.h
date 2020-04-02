@@ -39,7 +39,7 @@ node* hash_table[HASH_SIZE];    /*pointer to Hash Table*/
 void init_data();
 int hashCode(char* key);
 int contains(char* key);
-int getCount(node* head);
+int getCount(char* key);
 void insert(char* key, int value);
 node* get(char* key);
 void clear();
