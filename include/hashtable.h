@@ -6,10 +6,6 @@ file: hashtable.h
 #ifndef _HASHTABLE_H
 #define _HASHTABLE_H
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
 #define HASH_SIZE 128
 #define TRUE 1
 #define FALSE 0
@@ -27,22 +23,20 @@ typedef struct pair
 
 typedef struct node
 {
-	pair* p;
+	pair* pair;
 	struct node* next;
-}node;
+}node, **pnode;
 
 /*Each cell of this array is a pointer to the first node of a linked list, 
 because we want our HashTable to use a chaining collision handling*/
 
-node* hash_table[HASH_SIZE];    /*pointer to Hash Table*/
-
-void init_data();
+pnode init_data();
 int hashCode(char* key);
-int contains(char* key);
-int getCount(char* key);
-void insert(char* key, int value);
-node* get(char* key);
-void clear();
-void print();
+int contains(pnode table, char* key);
+int getCount(pnode table, char* key);
+void insert(pnode table, char* key, int value);
+node* get(pnode table, char* key);
+void clear(pnode table);
+void print(pnode table);
 
 #endif
