@@ -19,7 +19,7 @@ hashtable.o: $(SOURCE)/hashtable.c $(INCLUDE)/hashtable.h
 	@gcc $(CFLAGS) $(SOURCE)/hashtable.c -o $(BIN)/hashtable.o
 
 #tell make that "clean" is not a file name!
-.PHONY: clean run
+.PHONY: clean run debug
 
 clean:
 	@rm -vf $(BIN)/* myHashTable
@@ -27,3 +27,5 @@ clean:
 run: myHashTable
 	./myHashTable
 
+debug: myHashTable
+	@gdb myHashTable
