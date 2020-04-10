@@ -8,14 +8,17 @@ file: main.c
 
 int main()
 {
-	insert("MAIN", 2);
-	insert("LOOP", 3);
-	insert("END", 5);
-	insert("K", 5);
-	insert("LIST", 6);
-	insert("STR", 9);
+	pnode table;
+	table = init_data();
 	
-	print();
+	insert(table, "MAIN", 2);
+	insert(table, "LOOP", 3);
+	insert(table, "END", 5);
+	insert(table, "K", 5);
+	insert(table, "LIST", 6);
+	insert(table, "STR", 9);
+	
+	print(table);
 
 	return 0;
 }
