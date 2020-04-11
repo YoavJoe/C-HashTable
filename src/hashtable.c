@@ -9,7 +9,7 @@ file: hashtable.
 #include <string.h>
 #include <stdlib.h>
 
-pnode init_data() /*value range of size: 0 to 255*/
+pnode init_data()
 {
 	int i;
 	pnode table = NULL;
@@ -23,7 +23,9 @@ pnode init_data() /*value range of size: 0 to 255*/
 		if((table[i] = (node*)malloc(sizeof(node))) == NULL)
 			return NULL;
 
-		table[i]->pair = (pair*)calloc(2, sizeof(pair));
+		table[i]->pair = (pair*)malloc(sizeof(pair));
+		strcpy(table[i]->pair->key, "");
+		table[i]->pair->value = 0;
 		table[i]->next = NULL;
 	}
 
@@ -68,13 +70,12 @@ int contains(pnode table, char* key)
 
 	for(i = 0; i < size; i++)
 	{
-		if(vec->pair->key[0] != '\0')
+		if(strlen(vec->pair->key) > 1)
 			if(strcmp(vec->pair->key, key) == 0)
 				return TRUE;
 
 		vec = vec-> next;
 	}
-	printf("%s not found!\n", key);
 	return FALSE;
 }
 
@@ -89,7 +90,7 @@ void insert(pnode table, char* key, int value)
 	}
 	i = hashCode(key);
 	vec = table[i];
-	vec->pair->key = key;
+	strcpy(vec->pair->key, key);
 	vec->pair->value = value;
 
 	/*make next of vec as head */
@@ -133,11 +134,10 @@ void print(pnode table)
 			printf("%s",vec->pair->key);
 			printf(":");
 			printf("%d",vec->pair->value);
-			if(i < HASH_SIZE)
-				printf(", ");
+			if(i < (HASH_SIZE - 1) && j < size)
+				printf(", ");		 
 		}
 	}
-
 	printf("}\n");
 }
 
