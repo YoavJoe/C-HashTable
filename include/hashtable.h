@@ -6,9 +6,11 @@ file: hashtable.h
 #ifndef _HASHTABLE_H
 #define _HASHTABLE_H
 
-#define HASH_SIZE 128
+#define HASH_SIZE 10
 #define TRUE 1
 #define FALSE 0
+
+#define MAX_KEY 30
 
 /* std::array<std::vector<std::pair<K, V>>, MAP_SIZE> data;*/
 /* array of list: node with value of struct pair and next*/
@@ -17,7 +19,7 @@ file: hashtable.h
 
 typedef struct pair
 {
-	char* key;
+	char key[MAX_KEY]; /*Defined arbitrarily max chars in the key*/
 	int value;
 }pair;
 
