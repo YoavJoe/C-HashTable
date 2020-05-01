@@ -10,7 +10,7 @@ node** init_table()
 	node** table = NULL;
 
 	/*Allocate the table itself*/
-	table = (node**)calloc(2, sizeof(node*) * HASH_SIZE);
+	table = (node**)malloc(sizeof(node*) * HASH_SIZE);
 	
 
 	return table;
@@ -62,6 +62,56 @@ void insert(node** table, char* key, int value)
 	int i = hash_code(key);
 	pair* pair = make_new_pair(key, value);
 	add_to_list(&table[i], pair);
+}
+
+pair* get(node** table, char* key)
+{
+	node* lst = table[hash_code(key)];
+
+	if(lst == NULL) {
+		printf("Erorr: %s not found!\n", key);
+		return NULL;
+	}
+	while(lst != NULL) {
+		if(strcmp(lst->pair->key, key) == 0)
+			return lst->pair;
+		lst = lst->next;
+	}
+
+	return NULL;
+}
+
+void del_from_lst(node** head, char* key)
+{
+	node* temp = *head, *prev = NULL;
+
+	if(temp != NULL) {
+		*head = temp->next;
+		free(temp);
+		printf("%s has removed successfuly!\n", key);
+		return;
+	}
+
+	while(temp != NULL && strcmp(temp->pair->key, key) == 0) {
+		prev = temp;
+		temp = temp->next;
+	}
+
+	if(temp == NULL) {
+		printf("Erorr: %s not found!\n", key);
+		return;
+	}
+	/*Unlink the node from linked list*/
+	prev->next = temp->next;
+	free(temp);
+
+}
+
+void erase(node** table, char* key)
+{
+	int i = hash_code(key);
+
+	del_from_lst(&table[i], key);
 }
 
 /*an util function to free a list*/
