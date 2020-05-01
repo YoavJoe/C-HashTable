@@ -39,10 +39,15 @@ because we want our HashTable to use a chaining collision handling*/
 node** init_table();
 int hash_code(char* key);
 void insert(node** table, char* key, int value);
-node* get(node** table, char* key);
-
-void free_list(node* node); /*an util function to free a list*/
-void clear_table(node** table);
+pair* get(node** table, char* key);
+void erase(node** table, char* key);
 void print(node** table);
+void clear_table(node** table);
+
+/*Util functions*/
+pair* make_new_pair(char* key, int value);
+void add_to_list(node** head, pair* new_pair);
+void free_list(node* cur);
+void del_from_lst(node** head, char* key);
 
 #endif
