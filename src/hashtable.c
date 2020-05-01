@@ -10,7 +10,7 @@ node** init_table()
 	node** table = NULL;
 
 	/*Allocate the table itself*/
-	table = (node**)malloc(sizeof(node*) * HASH_SIZE);
+	table = (node**)calloc(2, sizeof(node*) * HASH_SIZE);
 	
 
 	return table;
@@ -41,30 +41,27 @@ pair* make_new_pair(char* key, int value)
 	return new_pair;
 }
 
-void add_to_list(node* head, pair* new_pair)
+void add_to_list(node** head, pair* new_pair)
 {
-	node* current = NULL;
-	node* new_node = (node*)malloc(sizeof(node));
+	node* new_node = (node*)calloc(2, sizeof(node));
+	node* current = *head;
 	new_node->pair = new_pair;
-	new_node->next = NULL;
 
-	if(head == NULL) {
-		head = new_node;
+	if(*head == NULL) {
+		*head = new_node;
+		return;
 	}
-	else {
-		current = head;
-		while(current->next != NULL)
+
+	while(current->next != NULL)
 			current = current->next;
-		current->next = new_node; 
-	}
+	current->next = new_node; 
 }
 
 void insert(node** table, char* key, int value)
 {
 	int i = hash_code(key);
-	node* lst = table[i];
 	pair* pair = make_new_pair(key, value);
-	add_to_list(lst, pair);
+	add_to_list(&table[i], pair);
 }
 
 /*an util function to free a list*/
@@ -103,14 +100,14 @@ void print(node** table)
 	{
 		head = table[i];
 		while(head != NULL) {
-			printf("head: %x\n", head);
+			/*printf("head: %x\n", head);*/
 
 			curr = head->pair;
 
 			if(curr == NULL)
 				continue;
 			printf("%s: %d",curr->key, curr->value);
-			if(i < (HASH_SIZE - 1) && head->next != NULL)
+			if(i < (HASH_SIZE - 1))
 				printf(", ");
 
 			head = head->next;
