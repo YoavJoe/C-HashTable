@@ -29,3 +29,6 @@ run: myHashTable
 
 debug: myHashTable
 	@gdb myHashTable
+
+memcheck: myHashTable
+	valgrind --leak-check=yes ./myHashTable
